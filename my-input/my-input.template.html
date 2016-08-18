@@ -1,0 +1,23 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-10">
+      <!--Body content-->
+      <p>
+      Name: <input ng-model="$ctrl.name">
+      </p>
+      <p>Hello, {{$ctrl.name}}</p>
+        
+      <p>Juwels Length: {{$ctrl.juwels.length}}
+      <ul>
+          <li ng-repeat="juwel in $ctrl.juwels | filter:$ctrl.query">
+          <span>{{juwel.name}} : {{juwel.price}}</span>
+          </li>
+      </ul> 
+
+      <p>Search: 
+        <input ng-model="$ctrl.query">
+      </p>
+
+    </div>
+  </div>
+</div>
