@@ -1,0 +1,27 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-10">
+      <!--Body content-->
+        <p>金額:
+            <input type="text" ng-model="$ctrl.amount" required>
+        </p>
+        傾斜:<select name="" ng-model="$ctrl.type" ng-options="type for type in ['Soft', 'Hard', 'Even']" ng-init="$ctrl.type='Even'">
+        </select>
+      <ul>
+          <li ng-repeat="person in $ctrl.persons">
+          <div ng-switch="$ctrl.type">
+            <span ng-switch-when="Even">
+              {{person.name}} : {{$ctrl.amount / $ctrl.persons.length}}
+            </span>
+            <span ng-switch-when="Soft">
+              {{person.name}} : {{$ctrl.amount / $ctrl.soft_total * person.soft}}
+            </span>
+            <span ng-switch-when="Hard">
+              {{person.name}} : {{$ctrl.amount / $ctrl.hard_total * person.hard}}
+            </span>
+          </div>
+          </li>
+      </ul> 
+    </div>
+  </div>
+</div>

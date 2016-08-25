@@ -5,23 +5,55 @@
         <p>金額:
             <input type="text" ng-model="$ctrl.amount" required>
         </p>
-        傾斜:<select name="" ng-model="$ctrl.type" ng-options="type for type in ['Soft', 'Hard', 'Even']" ng-init="$ctrl.type='Even'">
+        傾斜:<select name="" ng-model="$ctrl.type" ng-options="type for type in ['Soft', 'Hard', 'Even', 'Original']" ng-init="$ctrl.type='Even'">
         </select>
+
+        <div ng-switch="$ctrl.type" >
+          <div ng-switch-when="Original">
+           比率を配分してください．
+            <p>
+            部長：<input type="text" ng-model="$ctrl.pay_rate_A">
+            G M ：<input type="text" ng-model="$ctrl.pay_rate_B">
+            上専：<input type="text" ng-model="$ctrl.pay_rate_C">
+            主任：<input type="text" ng-model="$ctrl.pay_rate_D">
+            副主任：<input type="text" ng-model="$ctrl.pay_rate_E">
+            </p>
+            <p>
+            専門職：<input type="text" ng-model="$ctrl.pay_rate_F">
+            総合職：<input type="text" ng-model="$ctrl.pay_rate_G">
+            パートナー：<input type="text" ng-model="$ctrl.pay_rate_P">
+            </p>
+          </div>
+        </div>
+
+      <h3>出席者</h3>
       <ul>
-          <li ng-repeat="person in $ctrl.persons">
+          <li ng-repeat="person in $ctrl.persons | orderBy: 'position'">
           <div ng-switch="$ctrl.type">
-            <span ng-switch-when="Even">
-              {{person.name}} : {{$ctrl.amount / $ctrl.persons.length}}
-            </span>
-            <span ng-switch-when="Soft">
-              {{person.name}} : {{$ctrl.amount / $ctrl.soft_total * person.soft}}
-            </span>
-            <span ng-switch-when="Hard">
-              {{person.name}} : {{$ctrl.amount / $ctrl.hard_total * person.hard}}
-            </span>
+            <input type="checkbox" ng-model="person.cancel" ng-change="$ctrl.checkIn()">
+              <label ng-switch-when="Even" ng-if="!person.cancel">
+                {{person.name}} : {{$ctrl.amount / $ctrl.persons.length}}
+              </label>
+              <label ng-switch-when="Soft" ng-if="!person.cancel">
+                {{person.name}} : {{$ctrl.amount / $ctrl.soft_total * person.soft}}
+                {{$ctrl.persons.soft_total}}
+              </label>
+              <label ng-switch-when="Hard" ng-if="!person.cancel">
+                {{person.name}} : {{$ctrl.amount / $ctrl.hard_total * person.hard}}
+              </label>
           </div>
           </li>
       </ul> 
+      <h3>欠席者</h3>
+      <ul>
+          <li ng-repeat="person in $ctrl.cancel_persons | orderBy: 'position'" >
+            <input type="checkbox" ng-model="person.cancel" ng-change="$ctrl.checkOut()">
+              <label><s ng-if="person.cancel">{{person.name}} : 0</s></label>
+          </li>
+      </ul> 
+      {{$ctrl.persons|json}}
+      <br>
+      {{$ctrl.cancel_persons|json}}
     </div>
   </div>
 </div>
