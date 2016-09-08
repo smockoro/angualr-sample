@@ -4,7 +4,9 @@
       <!--Body content-->
         <p>金額:
             <input type="text" ng-model="$ctrl.amount" required>
+            <input type="button" ng-click="$ctrl.even($ctrl.persons)" value="金額の確定">
         </p>
+
         傾斜:<select name="" ng-model="$ctrl.type" ng-options="type for type in ['Soft', 'Hard', 'Even', 'Original']" ng-init="$ctrl.type='Even'">
         </select>
 
@@ -33,10 +35,10 @@
             <input type="checkbox" ng-model="person.cancel" ng-change="$ctrl.checkIn()">
               <label ng-switch-when="Even" ng-if="!person.cancel">
                 {{person.name}} : {{$ctrl.amount / $ctrl.persons.length}}
+                {{person.name}} : <input type="number" value="{{person.payment}}" ng-model="person.payment"}>
               </label>
               <label ng-switch-when="Soft" ng-if="!person.cancel">
                 {{person.name}} : {{$ctrl.amount / $ctrl.soft_total * person.soft}}
-                {{$ctrl.persons.soft_total}}
               </label>
               <label ng-switch-when="Hard" ng-if="!person.cancel">
                 {{person.name}} : {{$ctrl.amount / $ctrl.hard_total * person.hard}}
@@ -44,6 +46,10 @@
           </div>
           </li>
       </ul> 
+
+      <h3>過不足金</h3>
+      　<p>{{$ctrl.exPay()}}</p>
+
       <h3>欠席者</h3>
       <ul>
           <li ng-repeat="person in $ctrl.cancel_persons | orderBy: 'position'" >
