@@ -32,7 +32,7 @@
       <ul>
           <li ng-repeat="person in $ctrl.persons | orderBy: 'position'">
           <div ng-switch="$ctrl.type">
-            <input type="checkbox" ng-model="person.cancel" ng-change="$ctrl.checkIn()">
+            <input type="checkbox" ng-model="person.cancel" ng-change="$ctrl.checkIn()" ng-change="$ctrl.even($ctrl.persons)">
               <label ng-switch-when="Even" ng-if="!person.cancel">
                 {{person.name}} : {{$ctrl.amount / $ctrl.persons.length}}
                 {{person.name}} : <input type="number" value="{{person.payment}}" ng-model="person.payment"}>

@@ -50,12 +50,12 @@ angular.
         }
       }
 
-      self.exPay() = function(){
+      self.exPay = function(){
         var ex_payment = 0;
         self.persons.forEach(function(person) {
             ex_payment += person.payment;
         });
-        return ex_payment;
+        return self.amount - ex_payment;
       }
 
       self.cancel_persons = [];
